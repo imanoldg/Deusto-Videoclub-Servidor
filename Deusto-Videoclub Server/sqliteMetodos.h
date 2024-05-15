@@ -13,6 +13,6 @@ extern "C" {
 #include "Usuario.h"
 
 sqlite3* abrirDB();
-int iniciarSesion(char* usuario, char* contrasenha, Usuario& u);
+int iniciarSesion(char* usuario, char* contrasenha, Usuario &u);
 
 #endif /* SQLITEMETODOS_H_ */

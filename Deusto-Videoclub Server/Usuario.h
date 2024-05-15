@@ -24,6 +24,7 @@ private:
 	
 public:
 	Usuario(char* dni, char* nombre, char* apellido, char* email, int telefono, char* user, char* contra, char genero, char* fechaNcto, int numTarjeta, int puntos);
+	Usuario();
 	Usuario(Usuario &u);
 	~Usuario();
 

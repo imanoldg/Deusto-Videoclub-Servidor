@@ -84,8 +84,8 @@ int iniciarSesion(char *usuario, char *contrasenha, Usuario &u) {
 		sqlite3_finalize(stmt);
 		//CERRAR BASE DE DATOS
 		sqlite3_close(db);
-		return 1;
 
+		return 1;
 	} else {
 		printf("ERROR INICIANDO SESION\n");
 		printf("%s\n", sqlite3_errmsg(db));

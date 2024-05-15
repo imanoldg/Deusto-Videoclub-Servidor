@@ -25,6 +25,21 @@ Usuario::Usuario(char* dni, char* nombre, char* apellido, char* email, int telef
 	this->puntos = puntos;
 }
 
+Usuario::Usuario(){
+	strcpy(this->dni, "");
+	strcpy(this->nombre, "");
+	strcpy(this->apellido, "");
+	strcpy(this->email, "");
+	this->telefono = 0;
+	strcpy(this->user, "");
+	strcpy(this->contra, "");
+	this->genero = 'M';
+	this->fechaNcto = new char(strlen("") + 1);
+	strcpy(this->fechaNcto, "");
+	this->numTarjeta = 0;
+	this->puntos = 0;
+}
+
 Usuario::Usuario(Usuario &otro){
 	strcpy(this->dni, otro.dni);
 	strcpy(this->nombre, otro.nombre);
