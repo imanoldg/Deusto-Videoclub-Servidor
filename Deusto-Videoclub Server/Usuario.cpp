@@ -10,7 +10,7 @@
 using namespace std;
 
 
-Usuario::Usuario(char* dni, char* nombre, char* apellido, char* email, int telefono, char* user, char* contra, char* genero, char* fechaNcto, int numTarjeta, int puntos){
+Usuario::Usuario(char* dni, char* nombre, char* apellido, char* email, int telefono, char* user, char* contra, char genero, char* fechaNcto, int numTarjeta, int puntos){
 	strcpy(this->dni, dni);
 	strcpy(this->nombre, nombre);
 	strcpy(this->apellido, apellido);
@@ -18,7 +18,7 @@ Usuario::Usuario(char* dni, char* nombre, char* apellido, char* email, int telef
 	this->telefono = telefono;
 	strcpy(this->user, user);
 	strcpy(this->contra, contra);
-	strcpy(this->genero, genero);
+	this->genero = genero;
 	this->fechaNcto = new char(strlen(fechaNcto) + 1);
 	strcpy(this->fechaNcto, fechaNcto);
 	this->numTarjeta = numTarjeta;
@@ -33,7 +33,7 @@ Usuario::Usuario(Usuario &otro){
 	this->telefono = otro.telefono;
 	strcpy(this->user, otro.user);
 	strcpy(this->contra, otro.contra);
-	strcpy(this->genero, otro.genero);
+	this->genero = otro.genero;
 	this->fechaNcto = new char(strlen(otro.fechaNcto) + 1);
 	strcpy(this->fechaNcto, otro.fechaNcto);
 	this->numTarjeta = otro.numTarjeta;
@@ -41,14 +41,7 @@ Usuario::Usuario(Usuario &otro){
 }
 
 Usuario::~Usuario(){
-	delete[] dni;
-	delete[] nombre;
-	delete[] apellido;
-	delete[] email;
-	delete[] user;
-	delete[] contra;
-	delete[] genero;
-	delete[] fechaNcto;
+
 }
 
 
@@ -80,7 +73,7 @@ char* Usuario::getContra(){
 	return this->contra;
 }
 
-char* Usuario::getGenero(){
+char Usuario::getGenero(){
 	return this->genero;
 }
 
@@ -98,4 +91,45 @@ int Usuario::getPuntos(){
 
 void Usuario::setPuntos(int puntos){
 	this->puntos = puntos;
+}
+
+void Usuario::setApellido(char* apellido){
+	strcpy(this->apellido, apellido);
+}
+
+void Usuario::setContra(char* contra){
+	strcpy(this->contra, contra);
+}
+
+void Usuario::setDNI(char* dni){
+	strcpy(this->dni, dni);
+}
+
+void Usuario::setEmail(char* email){
+	strcpy(this->email, email);
+}
+
+void Usuario::setFechaNcto(char* fecha){
+	this->fechaNcto = new char(strlen(fecha) + 1);
+	strcpy(this->fechaNcto, fecha);
+}
+
+void Usuario::setGenero(char genero){
+	this->genero= genero;
+}
+
+void Usuario::setNombre(char* nombre){
+	strcpy(this->nombre, nombre);
+}
+
+void Usuario::setNumTarjeta(int numTarj){
+	this->numTarjeta = numTarj;
+}
+
+void Usuario::setTlf(int tlf){
+	this->telefono = tlf;
+}
+
+void Usuario::setUser(char* user){
+	strcpy(this->user, user);
 }

@@ -17,13 +17,13 @@ private:
 	int telefono;
 	char user[40];
 	char contra[16];
-	char genero[1];
+	char genero;
 	char* fechaNcto;
 	int numTarjeta;
 	int puntos;
 	
 public:
-	Usuario(char* dni, char* nombre, char* apellido, char* email, int telefono, char* user, char* contra, char* genero, char* fechaNcto, int numTarjeta, int puntos);
+	Usuario(char* dni, char* nombre, char* apellido, char* email, int telefono, char* user, char* contra, char genero, char* fechaNcto, int numTarjeta, int puntos);
 	Usuario(Usuario &u);
 	~Usuario();
 
@@ -34,11 +34,22 @@ public:
 	int getTlf();
 	char* getUser();
 	char* getContra();
-	char* getGenero();
+	char getGenero();
 	char* getFechaNcto();
 	int getNumTarjeta();
 	int getPuntos();
+
 	void setPuntos(int puntos);
+	void setDNI(char* dni);
+	void setNombre(char* nombre);
+	void setApellido(char* apellido);
+	void setEmail(char* email);
+	void setTlf(int tlf);
+	void setUser(char* user);
+	void setContra(char* contra);
+	void setGenero(char genero);
+	void setFechaNcto(char* fecha);
+	void setNumTarjeta(int numTarj);
 };
 
 #endif /* USUARIO_H_ */
