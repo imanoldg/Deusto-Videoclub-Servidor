@@ -2,7 +2,7 @@
  * sqliteMetodos.h
  *
  *  Created on: 15 may 2024
- *      Author: Usuario
+ *      Author: Imanol
  */
 
 #ifndef SQLITEMETODOS_H_

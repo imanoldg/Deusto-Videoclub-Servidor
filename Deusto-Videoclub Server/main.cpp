@@ -2,7 +2,7 @@
  * main.cpp
  *
  *  Created on: 15 may 2024
- *      Author: Usuario
+ *      Author: Imanol
  */
 #include <winsock2.h>
 #include <iostream>

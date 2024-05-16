@@ -2,7 +2,7 @@
  * sqliteMetodos.cpp
  *
  *  Created on: 15 may 2024
- *      Author: Usuario
+ *      Author: Imanol
  */
 extern "C" {
 #include "sqlite3.h"
