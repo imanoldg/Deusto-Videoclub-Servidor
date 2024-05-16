@@ -31,10 +31,10 @@ int main(void){
 
 	cout << "Iniciando libreria socket\n" << endl;
 	if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-		cout << " No se ha podido inicializar la libreria socket. Codigo de error: " << WSAGetLastError() << endl;
+		cout << " No se ha podido iniciar la libreria socket. Codigo de error: " << WSAGetLastError() << endl;
 		return -1;
 	}
-	cout << "Libreria socket inicializada" << endl;
+	cout << "Libreria socket iniciada" << endl;
 
 	//SOCKET creation
 	if ((conn_socket = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
