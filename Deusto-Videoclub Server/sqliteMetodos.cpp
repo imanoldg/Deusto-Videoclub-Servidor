@@ -71,9 +71,9 @@ int iniciarSesion(char *usuario, char *contrasenha, Usuario &u) {
 				u.setContra((char*) sqlite3_column_text(stmt, 6));
 
 				if(sqlite3_column_int(stmt, 7) == 1){
-					u.setGenero('M');
+					u.setGenero("M");
 				} else{
-					u.setGenero('F');
+					u.setGenero("F");
 				}
 
 				u.setFechaNcto((char*) sqlite3_column_text(stmt, 8));
