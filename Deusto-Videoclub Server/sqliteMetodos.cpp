@@ -1,3 +1,4 @@
+
 /*
  * sqliteMetodos.cpp
  *
@@ -8,6 +9,7 @@ extern "C" {
 #include "sqlite3.h"
 }
 #include "Usuario.h"
+#include "Peliculas.h"
 #include "string.h"
 #include <iostream>
 using namespace std;
@@ -133,6 +135,46 @@ int passChange(char *dni, char *contrasenha) {
 	result = sqlite3_step(stmt);
 	if (result != SQLITE_DONE) {
 		printf("Error updating Password usuario\n");
+		return result;
+	}
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (UPDATE)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+	sqlite3_close(db);
+	return 0;
+}
+
+Peliculas getAlquileres(char *dni) {
+	sqlite3 *db = abrirDB();
+	Peliculas
+	sqlite3_stmt *stmt;
+
+	char sql[] = "SELECT COUNT(*) FROM alquiler WHERE DNI = ?";
+
+	int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		sqlite3_close(db);
+		return result;
+	}
+
+	result = sqlite3_bind_text(stmt, 1, dni, strlen(dni),
+	SQLITE_STATIC);
+	if (result != SQLITE_OK) {
+		printf("Error binding parameters\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+		return result;
+	}
+
+	result = sqlite3_step(stmt);
+	if (result != SQLITE_DONE) {
+		printf("Error counting alquileres\n");
 		return result;
 	}
 	result = sqlite3_finalize(stmt);

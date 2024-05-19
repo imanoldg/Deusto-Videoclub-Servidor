@@ -7,13 +7,16 @@
 
 #ifndef SQLITEMETODOS_H_
 #define SQLITEMETODOS_H_
+
 extern "C" {
 #include "sqlite3.h"
 }
 #include "Usuario.h"
+#include "Peliculas.h"
 
 sqlite3* abrirDB();
 int iniciarSesion(char* usuario, char* contrasenha, Usuario &u);
 int passChange(char* dni, char* contrasenha);
+Peliculas getAlquileres(char* dni);
 
 #endif /* SQLITEMETODOS_H_ */
