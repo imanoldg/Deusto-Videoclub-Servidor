@@ -128,7 +128,7 @@ int main(void){
 			sprintf(sendBuff, "Puntos: %d\n", u.getPuntos());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 
-			sprintf(sendBuff, "%d", resultado);
+			sprintf(sendBuff, "%d\n", resultado);
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 
 			printf("Respuesta enviada: %s \n", sendBuff);
@@ -145,7 +145,8 @@ int main(void){
 			strcpy(contrasenha, recvBuff);
 
 			if (passChange(dni, contrasenha) == 0){
-				printf("Contraseña actualizada");
+				sprintf(sendBuff, "Alquileres cargados");
+				send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 			}
 		}
 
@@ -153,6 +154,18 @@ int main(void){
 			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 			char dni[strlen(recvBuff)] = "";
 			strcpy(dni, recvBuff);
+
+			Peliculas peliculas = getAlquileres(dni);
+
+			sprintf(sendBuff, "%d", peliculas.getNumPeliculas());
+			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+
+			for (int i = 0; i < peliculas.getNumPeliculas() - 1; ++i) {
+				sprintf(sendBuff, "%s", peliculas.getNombre(i));
+				send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+			}
+
+
 		}
 
 	} while (1);
