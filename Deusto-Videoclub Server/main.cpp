@@ -128,7 +128,7 @@ int main(void){
 			sprintf(sendBuff, "Puntos: %d\n", u.getPuntos());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 
-			sprintf(sendBuff, "%d\n", resultado);
+			sprintf(sendBuff, "%d", resultado);
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 
 			printf("Respuesta enviada: %s \n", sendBuff);

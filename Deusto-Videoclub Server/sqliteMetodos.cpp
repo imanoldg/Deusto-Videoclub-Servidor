@@ -18,7 +18,7 @@ sqlite3* abrirDB() {
 
 	sqlite3 *db;
 
-	int result = sqlite3_open("User.db", &db);
+	int result = sqlite3_open("UserDB.db", &db);
 
 	if (result != SQLITE_OK) {
 		cout << "Error abriendo la base de datos" << endl;
