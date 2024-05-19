@@ -70,9 +70,9 @@ int iniciarSesion(char *usuario, char *contrasenha, Usuario &u) {
 				u.setUser((char*) sqlite3_column_text(stmt, 5));
 				u.setContra((char*) sqlite3_column_text(stmt, 6));
 
-				if(sqlite3_column_int(stmt, 7) == 1){
+				if (sqlite3_column_int(stmt, 7) == 1) {
 					u.setGenero("M");
-				} else{
+				} else {
 					u.setGenero("F");
 				}
 
@@ -89,9 +89,58 @@ int iniciarSesion(char *usuario, char *contrasenha, Usuario &u) {
 	} else {
 		printf("ERROR INICIANDO SESION\n");
 		printf("%s\n", sqlite3_errmsg(db));
+		sqlite3_finalize(stmt);
+		//CERRAR BASE DE DATOS
+		sqlite3_close(db);
 		return 0;
 	}
+}
 
+int passChange(char *dni, char *contrasenha) {
+	sqlite3 *db = abrirDB();
 
+	sqlite3_stmt *stmt;
 
+	char sql[] = "UPDATE Usuario SET Password = ? WHERE dni = ?";
+
+	int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		sqlite3_close(db);
+		return result;
+	}
+
+	result = sqlite3_bind_text(stmt, 1, contrasenha, strlen(contrasenha),
+	SQLITE_STATIC);
+	if (result != SQLITE_OK) {
+		printf("Error binding parameters\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+		return result;
+	}
+
+	result = sqlite3_bind_text(stmt, 2, dni, strlen(dni), SQLITE_STATIC);
+	if (result != SQLITE_OK) {
+		printf("Error binding parameters\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+		return result;
+	}
+
+	result = sqlite3_step(stmt);
+	if (result != SQLITE_DONE) {
+		printf("Error updating Password usuario\n");
+		return result;
+	}
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (UPDATE)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+	sqlite3_close(db);
+	return 0;
 }

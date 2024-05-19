@@ -6,7 +6,6 @@
  */
 #include <winsock2.h>
 #include <iostream>
-
 extern "C" {
 #include "sqlite3.h"
 }
@@ -133,6 +132,27 @@ int main(void){
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 
 			printf("Respuesta enviada: %s \n", sendBuff);
+		}
+
+
+		if(strcmp(recvBuff, "PASS_CHANGE") == 0){
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			char dni[strlen(recvBuff)] = "";
+			strcpy(dni, recvBuff);
+
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			char contrasenha[strlen(recvBuff)] = "";
+			strcpy(contrasenha, recvBuff);
+
+			if (passChange(dni, contrasenha) == 0){
+				printf("Contraseña actualizada");
+			}
+		}
+
+		if(strcmp(recvBuff, "GET_ALQUILERES") == 0){
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			char dni[strlen(recvBuff)] = "";
+			strcpy(dni, recvBuff);
 		}
 
 	} while (1);

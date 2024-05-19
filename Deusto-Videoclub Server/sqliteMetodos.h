@@ -14,5 +14,6 @@ extern "C" {
 
 sqlite3* abrirDB();
 int iniciarSesion(char* usuario, char* contrasenha, Usuario &u);
+int passChange(char* dni, char* contrasenha);
 
 #endif /* SQLITEMETODOS_H_ */
