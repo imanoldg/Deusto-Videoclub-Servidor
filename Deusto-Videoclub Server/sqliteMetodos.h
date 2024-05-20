@@ -15,8 +15,8 @@ extern "C" {
 #include "Peliculas.h"
 
 sqlite3* abrirDB();
-int iniciarSesion(char* usuario, char* contrasenha, Usuario &u);
-int passChange(char* dni, char* contrasenha);
-Peliculas getAlquileres(char* dni);
+int iniciarSesion(char usuario[], char contrasenha[], Usuario &u);
+int passChange(char dni[], char contrasenha[]);
+Peliculas getAlquileres(char dni[]);
 
 #endif /* SQLITEMETODOS_H_ */

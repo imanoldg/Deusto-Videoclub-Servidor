@@ -27,10 +27,10 @@ sqlite3* abrirDB() {
 	return db;
 }
 
-int iniciarSesion(char *usuario, char *contrasenha, Usuario &u) {
+int iniciarSesion(char usuario[], char contrasenha[], Usuario &u) {
 	sqlite3 *db = abrirDB();
 
-	int result;
+	int result = 0;
 
 	sqlite3_stmt *stmt;
 
@@ -99,7 +99,7 @@ int iniciarSesion(char *usuario, char *contrasenha, Usuario &u) {
 	}
 }
 
-int passChange(char *dni, char *contrasenha) {
+int passChange(char dni[], char contrasenha[]) {
 	sqlite3 *db = abrirDB();
 
 	sqlite3_stmt *stmt;
@@ -148,7 +148,7 @@ int passChange(char *dni, char *contrasenha) {
 	return 0;
 }
 
-Peliculas getAlquileres(char *dni) {
+Peliculas getAlquileres(char dni[]) {
 	sqlite3 *db = abrirDB();
 	Peliculas p;
 	sqlite3_stmt *stmt;
