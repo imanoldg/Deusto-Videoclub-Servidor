@@ -101,37 +101,45 @@ int main(void){
 
 			int resultado = iniciarSesion(usuario, contrasenha, u);
 
+			cout << u.getDNI() << endl;
+			cout << u.getNombre() << endl;
+			cout << u.getApellido() << endl;
+			cout << u.getEmail() << endl;
+			cout << u.getTlf() << endl;
+			cout << u.getUser() << endl;
+			cout << u.getContra() << endl;
+			cout << u.getGenero() << endl;
+			cout << u.getFechaNcto() << endl;
+			cout << u.getNumTarjeta() << endl;
+			cout << u.getPuntos() << endl;
+			cout << resultado << endl;
 			//SE HACE UN SPRINTF POR CADA PROPIEDAD DEL USUARIO
 
-			sprintf(sendBuff, "DNI: %s", u.getDNI());
+			sprintf(sendBuff, "%s", u.getDNI());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Nombre: %s", u.getNombre());
+			sprintf(sendBuff, "%s", u.getNombre());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Apellido: %s", u.getApellido());
+			sprintf(sendBuff, "%s", u.getApellido());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Email: %s", u.getEmail());
+			sprintf(sendBuff, "%s", u.getEmail());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Telefono: %d", u.getTlf());
+			sprintf(sendBuff, "%d", u.getTlf());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Email: %s", u.getEmail());
+			sprintf(sendBuff, "%s", u.getUser());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Usuario: %s", u.getUser());
+			sprintf(sendBuff, "%s", u.getContra());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Contraseña: %s", u.getContra());
+			sprintf(sendBuff, "%s", u.getGenero());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Genero: %s", u.getGenero());
+			sprintf(sendBuff, "%s", u.getFechaNcto());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Fecha Ncto: %s", u.getFechaNcto());
+			sprintf(sendBuff, "%d", u.getNumTarjeta());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Num Tarjeta: %d", u.getNumTarjeta());
-			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Puntos: %d", u.getPuntos());
+			sprintf(sendBuff, "%d", u.getPuntos());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 
 			sprintf(sendBuff, "%d", resultado);
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-
-			printf("Respuesta enviada: %s \n", sendBuff);
 		}
 
 
@@ -145,7 +153,7 @@ int main(void){
 			strcpy(contrasenha, recvBuff);
 
 			if (passChange(dni, contrasenha) == 0){
-				sprintf(sendBuff, "Alquileres cargados");
+				sprintf(sendBuff, "Contraseña cambiada");
 				send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 			}
 		}
@@ -154,7 +162,6 @@ int main(void){
 			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 			char dni[strlen(recvBuff)] = "";
 			strcpy(dni, recvBuff);
-
 			Peliculas peliculas = getAlquileres(dni);
 
 			sprintf(sendBuff, "%d", peliculas.getNumPeliculas());
