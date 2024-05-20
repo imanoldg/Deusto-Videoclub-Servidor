@@ -88,11 +88,11 @@ int main(void){
 
 		if (strcmp(recvBuff, "SESION_INIT") == 0) {
 			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-			char usuario[strlen(recvBuff)] = "";
+			char usuario[strlen(recvBuff)];
 			strcpy(usuario, recvBuff);
 
 			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-			char contrasenha[strlen(recvBuff)] = "";
+			char contrasenha[strlen(recvBuff)];
 			strcpy(contrasenha, recvBuff);
 
 			cout<<usuario<<endl;
@@ -103,29 +103,29 @@ int main(void){
 
 			//SE HACE UN SPRINTF POR CADA PROPIEDAD DEL USUARIO
 
-			sprintf(sendBuff, "DNI: %s\n", u.getDNI());
+			sprintf(sendBuff, "DNI: %s", u.getDNI());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Nombre: %s\n", u.getNombre());
+			sprintf(sendBuff, "Nombre: %s", u.getNombre());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Apellido: %s\n", u.getApellido());
+			sprintf(sendBuff, "Apellido: %s", u.getApellido());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Email: %s\n", u.getEmail());
+			sprintf(sendBuff, "Email: %s", u.getEmail());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Telefono: %d\n", u.getTlf());
+			sprintf(sendBuff, "Telefono: %d", u.getTlf());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Email: %s\n", u.getEmail());
+			sprintf(sendBuff, "Email: %s", u.getEmail());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Usuario: %s\n", u.getUser());
+			sprintf(sendBuff, "Usuario: %s", u.getUser());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Contraseña: %s\n", u.getContra());
+			sprintf(sendBuff, "Contraseña: %s", u.getContra());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Genero: %s\n", u.getGenero());
+			sprintf(sendBuff, "Genero: %s", u.getGenero());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Fecha Ncto: %s\n", u.getFechaNcto());
+			sprintf(sendBuff, "Fecha Ncto: %s", u.getFechaNcto());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Num Tarjeta: %d\n", u.getNumTarjeta());
+			sprintf(sendBuff, "Num Tarjeta: %d", u.getNumTarjeta());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Puntos: %d\n", u.getPuntos());
+			sprintf(sendBuff, "Puntos: %d", u.getPuntos());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 
 			sprintf(sendBuff, "%d", resultado);

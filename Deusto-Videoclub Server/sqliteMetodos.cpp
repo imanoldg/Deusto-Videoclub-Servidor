@@ -24,6 +24,9 @@ sqlite3* abrirDB() {
 		cout << "Error abriendo la base de datos" << endl;
 	}
 
+
+	cout << "BASE DE DATOS ABIERTA" << endl;
+
 	return db;
 }
 
