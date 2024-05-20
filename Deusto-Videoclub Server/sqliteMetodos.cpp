@@ -24,9 +24,6 @@ sqlite3* abrirDB() {
 		cout << "Error abriendo la base de datos" << endl;
 	}
 
-
-	cout << "BASE DE DATOS ABIERTA" << endl;
-
 	return db;
 }
 
@@ -48,6 +45,7 @@ int iniciarSesion(char *usuario, char *contrasenha, Usuario &u) {
 		if (result == SQLITE_ROW) {
 			//GUARDA LA CONTRASEÑA DEL USUARIO EN UNA VARIABLE
 			u.setContra((char*) sqlite3_column_text(stmt, 0));
+			cout << u.getContra();
 		}
 	} while (result == SQLITE_ROW);
 
