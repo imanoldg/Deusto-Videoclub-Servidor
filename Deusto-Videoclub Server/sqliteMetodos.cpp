@@ -155,9 +155,6 @@ int getNumAlquileres(char dni[]) {
 
 	int numPelis = 0;
 
-	cout << dni << endl;
-	cout << "DNI DE POMODORO: 91037593J" << endl;
-
 	char sql[] = "SELECT COUNT(*) FROM alquiler WHERE DNI = ?";
 
 	int result = sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);

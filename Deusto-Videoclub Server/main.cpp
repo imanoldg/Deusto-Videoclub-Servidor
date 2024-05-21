@@ -101,18 +101,6 @@ int main(void){
 
 			int resultado = iniciarSesion(usuario, contrasenha, u);
 
-			cout << u.getDNI() << endl;
-			cout << u.getNombre() << endl;
-			cout << u.getApellido() << endl;
-			cout << u.getEmail() << endl;
-			cout << u.getTlf() << endl;
-			cout << u.getUser() << endl;
-			cout << u.getContra() << endl;
-			cout << u.getGenero() << endl;
-			cout << u.getFechaNcto() << endl;
-			cout << u.getNumTarjeta() << endl;
-			cout << u.getPuntos() << endl;
-			cout << resultado << endl;
 			//SE HACE UN SPRINTF POR CADA PROPIEDAD DEL USUARIO
 
 			sprintf(sendBuff, "%s", u.getDNI());
@@ -158,13 +146,23 @@ int main(void){
 			}
 		}
 
+
+		if(strcmp(recvBuff, "GET_NUM_ALQUILERES") == 0){
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			char dni[strlen(recvBuff)] = "";
+			strcpy(dni, recvBuff);
+			int numPelis = getNumAlquileres(dni);
+
+			sprintf(sendBuff, "%d", numPelis);
+			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+		}
+
 		if(strcmp(recvBuff, "GET_ALQUILERES") == 0){
 			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 			char dni[strlen(recvBuff)] = "";
 			strcpy(dni, recvBuff);
 			int numPelis = getNumAlquileres(dni);
-			Pelicula* p;
-
+			Pelicula* p = new Pelicula();
 			listaPelis peliculas(p, numPelis);
 
 			getAlquileres(dni, peliculas);
@@ -174,7 +172,7 @@ int main(void){
 			sprintf(sendBuff, "%d", numPelis);
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 
-			for (int i = 0; i < peliculas.getNumPeliculas() - 1; ++i) {
+			for (int i = 0; i < numPelis; ++i) {
 				sprintf(sendBuff, "%s", peliculas.pelis[i].getNombre());
 				send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 			}
