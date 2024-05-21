@@ -167,8 +167,6 @@ int main(void){
 
 			getAlquileres(dni, peliculas);
 
-			//COMPROBAR QUE SE GUARDAN LAS PELICULAS EN LA LISTA DE PELICULAS
-
 			sprintf(sendBuff, "%d", numPelis);
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 
@@ -178,6 +176,20 @@ int main(void){
 			}
 
 
+		}
+
+		if(strcmp(recvBuff, "UPDATE_PUNTOS") == 0){
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			char dni[strlen(recvBuff)] = "";
+			strcpy(dni, recvBuff);
+
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			int numPuntos = atoi(recvBuff);
+
+			if(updatePuntos(dni, numPuntos) == 0){
+				sprintf(sendBuff, "Puntos actualizados. ¡Disfruta de tu oferta!");
+				send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+			}
 		}
 
 	} while (1);

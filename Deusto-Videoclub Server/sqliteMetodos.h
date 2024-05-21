@@ -19,4 +19,5 @@ int iniciarSesion(char usuario[], char contrasenha[], Usuario &u);
 int passChange(char dni[], char contrasenha[]);
 int getNumAlquileres(char dni[]);
 int getAlquileres(char dni[], listaPelis &p);
+int updatePuntos(char dni[], int numPuntos);
 #endif /* SQLITEMETODOS_H_ */
