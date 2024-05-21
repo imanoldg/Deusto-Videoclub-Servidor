@@ -162,13 +162,20 @@ int main(void){
 			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 			char dni[strlen(recvBuff)] = "";
 			strcpy(dni, recvBuff);
-			Peliculas peliculas = getAlquileres(dni);
+			int numPelis = getNumAlquileres(dni);
+			Pelicula* p;
 
-			sprintf(sendBuff, "%d", peliculas.getNumPeliculas());
+			listaPelis peliculas(p, numPelis);
+
+			getAlquileres(dni, peliculas);
+
+			//COMPROBAR QUE SE GUARDAN LAS PELICULAS EN LA LISTA DE PELICULAS
+
+			sprintf(sendBuff, "%d", numPelis);
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 
 			for (int i = 0; i < peliculas.getNumPeliculas() - 1; ++i) {
-				sprintf(sendBuff, "%s", peliculas.getNombre(i));
+				sprintf(sendBuff, "%s", peliculas.pelis[i].getNombre());
 				send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 			}
 

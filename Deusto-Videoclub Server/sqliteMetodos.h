@@ -12,11 +12,11 @@ extern "C" {
 #include "sqlite3.h"
 }
 #include "Usuario.h"
-#include "Peliculas.h"
+#include "Pelicula.h"
 
 sqlite3* abrirDB();
 int iniciarSesion(char usuario[], char contrasenha[], Usuario &u);
 int passChange(char dni[], char contrasenha[]);
-Peliculas getAlquileres(char dni[]);
-
+int getNumAlquileres(char dni[]);
+int getAlquileres(char dni[], listaPelis &p);
 #endif /* SQLITEMETODOS_H_ */
