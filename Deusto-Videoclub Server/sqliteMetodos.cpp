@@ -187,6 +187,7 @@ int getNumAlquileres(char dni[]) {
 		printf("%s\n", sqlite3_errmsg(db));
 	}
 
+	sqlite3_close(db);
 	return numPelis;
 }
 
