@@ -201,10 +201,11 @@ int getAlquileres(char dni[], listaPelis &p) {
 	if (result != SQLITE_OK) {
 		printf("Error preparing statement\n");
 		printf("%s\n", sqlite3_errmsg(db));
+		sqlite3_finalize(stmt);
 		sqlite3_close(db);
 	}
 
-	result = sqlite3_bind_text(stmt, 1, dni, strlen(dni),
+	result = sqlite3_bind_text(stmt, 1, dni, strlen(dni) + 1,
 	SQLITE_STATIC);
 	if (result != SQLITE_OK) {
 		printf("Error binding parameters\n");
@@ -224,8 +225,9 @@ int getAlquileres(char dni[], listaPelis &p) {
 
 	result = sqlite3_finalize(stmt);
 	if (result != SQLITE_OK) {
-		printf("Error finalizing statement (UPDATE)\n");
+		printf("Error finalizing statement SELECT\n");
 		printf("%s\n", sqlite3_errmsg(db));
+
 	}
 
 	sqlite3_close(db);
@@ -234,6 +236,7 @@ int getAlquileres(char dni[], listaPelis &p) {
 
 int updatePuntos(char dni[], int numPuntos) {
 	sqlite3 *db = abrirDB();
+
 	sqlite3_stmt *stmt;
 
 	char sql[] = "UPDATE usuario SET PUNTOS = ? WHERE DNI = ?";
@@ -268,12 +271,14 @@ int updatePuntos(char dni[], int numPuntos) {
 	if (result != SQLITE_DONE) {
 		printf("Error updating Puntos usuario\n");
 		printf("%s\n", sqlite3_errmsg(db));
+		result = sqlite3_finalize(stmt);
 		return result;
 	}
 	result = sqlite3_finalize(stmt);
 	if (result != SQLITE_OK) {
 		printf("Error finalizing statement (UPDATE)\n");
 		printf("%s\n", sqlite3_errmsg(db));
+		result = sqlite3_finalize(stmt);
 		return result;
 	}
 	sqlite3_close(db);
