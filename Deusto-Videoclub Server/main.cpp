@@ -161,7 +161,9 @@ int main(void){
 			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 			char dni[strlen(recvBuff)] = "";
 			strcpy(dni, recvBuff);
-			int numPelis = getNumAlquileres(dni);
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			int numPelis = atoi(recvBuff);
+
 			Pelicula* p = new Pelicula();
 			listaPelis peliculas(p, numPelis);
 

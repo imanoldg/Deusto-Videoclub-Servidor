@@ -226,8 +226,6 @@ int getAlquileres(char dni[], listaPelis &p) {
 		printf("%s\n", sqlite3_errmsg(db));
 		sqlite3_finalize(stmt);
 		sqlite3_close(db);
-	} else{
-		cout << "SENTENCIA PREPARADA" << endl;
 	}
 
 	result = sqlite3_bind_text(stmt, 1, dni, strlen(dni) + 1,
@@ -237,8 +235,6 @@ int getAlquileres(char dni[], listaPelis &p) {
 		printf("%s\n", sqlite3_errmsg(db));
 		sqlite3_finalize(stmt);
 		sqlite3_close(db);
-	} else{
-		cout << "PARAMETROS BINDEADOS" << endl;
 	}
 
 	int contador = 0;
