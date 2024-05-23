@@ -38,8 +38,8 @@ listaPelis::listaPelis(Pelicula* peli, int numPeliculas){
 }
 
 listaPelis::listaPelis(){
-	this->pelis = NULL;
 	this->numPeliculas = 0;
+	this->pelis = new Pelicula[this->numPeliculas];
 }
 
 listaPelis::~listaPelis(){

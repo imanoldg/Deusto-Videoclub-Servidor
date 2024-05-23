@@ -162,6 +162,7 @@ int getNumAlquileres(char dni[]) {
 	if (result != SQLITE_OK) {
 		printf("Error preparing statement\n");
 		printf("%s\n", sqlite3_errmsg(db));
+		sqlite3_finalize(stmt);
 		sqlite3_close(db);
 	}
 
@@ -185,6 +186,8 @@ int getNumAlquileres(char dni[]) {
 	if (result != SQLITE_OK) {
 		printf("Error finalizing statement (UPDATE)\n");
 		printf("%s\n", sqlite3_errmsg(db));
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
 	}
 
 	sqlite3_close(db);
@@ -196,6 +199,8 @@ int getAlquileres(char dni[], listaPelis &p) {
 	sqlite3_stmt *stmt;
 
 	char sql2[] = "SELECT TITULO_PELI FROM alquiler WHERE DNI = ?";
+
+	cout << "Seleccionando peliculas..." << endl;
 
 	int result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt, NULL);
 	if (result != SQLITE_OK) {
@@ -218,7 +223,9 @@ int getAlquileres(char dni[], listaPelis &p) {
 	do {
 		result = sqlite3_step(stmt);
 		if (result == SQLITE_ROW) {
+			cout << (char*) sqlite3_column_text(stmt, 0) << endl;
 			p.pelis[contador].setNombre((char*) sqlite3_column_text(stmt, 0));
+			cout << p.pelis[contador].getNombre() << endl;
 			contador++;
 		}
 	} while (result == SQLITE_ROW);
@@ -227,6 +234,8 @@ int getAlquileres(char dni[], listaPelis &p) {
 	if (result != SQLITE_OK) {
 		printf("Error finalizing statement SELECT\n");
 		printf("%s\n", sqlite3_errmsg(db));
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
 
 	}
 
@@ -245,6 +254,7 @@ int updatePuntos(char dni[], int numPuntos) {
 	if (result != SQLITE_OK) {
 		printf("Error preparing statement\n");
 		printf("%s\n", sqlite3_errmsg(db));
+		sqlite3_finalize(stmt);
 		sqlite3_close(db);
 		return result;
 	}
@@ -271,16 +281,19 @@ int updatePuntos(char dni[], int numPuntos) {
 	if (result != SQLITE_DONE) {
 		printf("Error updating Puntos usuario\n");
 		printf("%s\n", sqlite3_errmsg(db));
-		result = sqlite3_finalize(stmt);
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
 		return result;
 	}
 	result = sqlite3_finalize(stmt);
 	if (result != SQLITE_OK) {
 		printf("Error finalizing statement (UPDATE)\n");
 		printf("%s\n", sqlite3_errmsg(db));
-		result = sqlite3_finalize(stmt);
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
 		return result;
 	}
 	sqlite3_close(db);
 	return 0;
 }
+
