@@ -103,35 +103,31 @@ int main(void){
 
 			//SE HACE UN SPRINTF POR CADA PROPIEDAD DEL USUARIO
 
-			sprintf(sendBuff, "DNI: %s", u.getDNI());
+			sprintf(sendBuff, "%s", u.getDNI());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Nombre: %s", u.getNombre());
+			sprintf(sendBuff, "%s", u.getNombre());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Apellido: %s", u.getApellido());
+			sprintf(sendBuff, "%s", u.getApellido());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Email: %s", u.getEmail());
+			sprintf(sendBuff, "%s", u.getEmail());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Telefono: %d", u.getTlf());
+			sprintf(sendBuff, "%d", u.getTlf());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Email: %s", u.getEmail());
+			sprintf(sendBuff, "%s", u.getUser());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Usuario: %s", u.getUser());
+			sprintf(sendBuff, "%s", u.getContra());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Contraseña: %s", u.getContra());
+			sprintf(sendBuff, "%s", u.getGenero());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Genero: %s", u.getGenero());
+			sprintf(sendBuff, "%s", u.getFechaNcto());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Fecha Ncto: %s", u.getFechaNcto());
+			sprintf(sendBuff, "%d", u.getNumTarjeta());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Num Tarjeta: %d", u.getNumTarjeta());
-			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-			sprintf(sendBuff, "Puntos: %d", u.getPuntos());
+			sprintf(sendBuff, "%d", u.getPuntos());
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 
 			sprintf(sendBuff, "%d", resultado);
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-
-			printf("Respuesta enviada: %s \n", sendBuff);
 		}
 
 
@@ -145,27 +141,55 @@ int main(void){
 			strcpy(contrasenha, recvBuff);
 
 			if (passChange(dni, contrasenha) == 0){
-				sprintf(sendBuff, "Alquileres cargados");
+				sprintf(sendBuff, "Contraseña cambiada");
 				send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 			}
+		}
+
+
+		if(strcmp(recvBuff, "GET_NUM_ALQUILERES") == 0){
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			char dni[strlen(recvBuff)] = "";
+			strcpy(dni, recvBuff);
+			int numPelis = getNumAlquileres(dni);
+
+			sprintf(sendBuff, "%d", numPelis);
+			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 		}
 
 		if(strcmp(recvBuff, "GET_ALQUILERES") == 0){
 			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 			char dni[strlen(recvBuff)] = "";
 			strcpy(dni, recvBuff);
+			int numPelis = getNumAlquileres(dni);
+			Pelicula* p = new Pelicula();
+			listaPelis peliculas(p, numPelis);
 
-			Peliculas peliculas = getAlquileres(dni);
+			getAlquileres(dni, peliculas);
 
-			sprintf(sendBuff, "%d", peliculas.getNumPeliculas());
+			sprintf(sendBuff, "%d", numPelis);
 			send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 
-			for (int i = 0; i < peliculas.getNumPeliculas() - 1; ++i) {
-				sprintf(sendBuff, "%s", peliculas.getNombre(i));
+			for (int i = 0; i < numPelis; ++i) {
+				sprintf(sendBuff, "%s", peliculas.pelis[i].getNombre());
 				send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 			}
 
 
+		}
+
+		if(strcmp(recvBuff, "UPDATE_PUNTOS") == 0){
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			char dni[strlen(recvBuff)] = "";
+			strcpy(dni, recvBuff);
+
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			int numPuntos = atoi(recvBuff);
+
+			if(updatePuntos(dni, numPuntos) == 0){
+				sprintf(sendBuff, "Puntos actualizados. ¡Disfruta de tu oferta!");
+				send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+			}
 		}
 
 	} while (1);
