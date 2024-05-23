@@ -58,7 +58,6 @@ int iniciarSesion(char usuario[], char contrasenha[], Usuario &u) {
 				&& strcmp(contrasenha, (char*) sqlite3_column_text(stmt, 6))
 						== 0) {
 			cout << "USUARIO Y CONTRASEÑA CORRECTOS" << endl;
-			cout << endl;
 			cout << "SESIÓN INICIADA" << endl;
 
 			u.setDNI((char*) sqlite3_column_text(stmt, 0));
@@ -78,10 +77,18 @@ int iniciarSesion(char usuario[], char contrasenha[], Usuario &u) {
 			u.setFechaNcto((char*) sqlite3_column_text(stmt, 8));
 			u.setNumTarjeta((int) sqlite3_column_int(stmt, 9));
 			u.setPuntos((int) sqlite3_column_int(stmt, 10));
-			return 1;
 
-			sqlite3_finalize(stmt);
+			result = sqlite3_finalize(stmt);
+			if (result != SQLITE_OK) {
+				printf("Error finalizing statement SELECT\n");
+				printf("%s\n", sqlite3_errmsg(db));
+				return result;
+			} else {
+				cout << "SENTENCIA FINALIZADA" << endl;
+			}
+
 			sqlite3_close(db);
+			return 1;
 
 		}
 
@@ -94,7 +101,14 @@ int iniciarSesion(char usuario[], char contrasenha[], Usuario &u) {
 		return 0;
 	}
 
-	sqlite3_finalize(stmt);
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement SELECT\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	} else {
+		cout << "SENTENCIA FINALIZADA" << endl;
+	}
 	sqlite3_close(db);
 	return 0;
 
@@ -144,6 +158,8 @@ int passChange(char dni[], char contrasenha[]) {
 		printf("Error finalizing statement (UPDATE)\n");
 		printf("%s\n", sqlite3_errmsg(db));
 		return result;
+	} else {
+		cout << "SENTENCIA FINALIZADA" << endl;
 	}
 	sqlite3_close(db);
 	return 0;
@@ -184,10 +200,12 @@ int getNumAlquileres(char dni[]) {
 
 	result = sqlite3_finalize(stmt);
 	if (result != SQLITE_OK) {
-		printf("Error finalizing statement (UPDATE)\n");
+		printf("Error finalizing statement SELECT COUNT(*)\n");
 		printf("%s\n", sqlite3_errmsg(db));
 		sqlite3_finalize(stmt);
 		sqlite3_close(db);
+	} else {
+		cout << "SENTENCIA COUNT FINALIZADA" << endl;
 	}
 
 	sqlite3_close(db);
@@ -208,6 +226,8 @@ int getAlquileres(char dni[], listaPelis &p) {
 		printf("%s\n", sqlite3_errmsg(db));
 		sqlite3_finalize(stmt);
 		sqlite3_close(db);
+	} else{
+		cout << "SENTENCIA PREPARADA" << endl;
 	}
 
 	result = sqlite3_bind_text(stmt, 1, dni, strlen(dni) + 1,
@@ -217,6 +237,8 @@ int getAlquileres(char dni[], listaPelis &p) {
 		printf("%s\n", sqlite3_errmsg(db));
 		sqlite3_finalize(stmt);
 		sqlite3_close(db);
+	} else{
+		cout << "PARAMETROS BINDEADOS" << endl;
 	}
 
 	int contador = 0;
@@ -227,7 +249,7 @@ int getAlquileres(char dni[], listaPelis &p) {
 			p.pelis[contador].setNombre((char*) sqlite3_column_text(stmt, 0));
 			cout << p.pelis[contador].getNombre() << endl;
 			contador++;
-		} else{
+		} else {
 			printf("Error\n");
 			printf("%s\n", sqlite3_errmsg(db));
 			sqlite3_finalize(stmt);
@@ -242,6 +264,8 @@ int getAlquileres(char dni[], listaPelis &p) {
 		sqlite3_finalize(stmt);
 		sqlite3_close(db);
 
+	} else {
+		cout << "SENTENCIA FINALIZADA" << endl;
 	}
 
 	sqlite3_close(db);
@@ -297,6 +321,8 @@ int updatePuntos(char dni[], int numPuntos) {
 		sqlite3_finalize(stmt);
 		sqlite3_close(db);
 		return result;
+	} else {
+		cout << "SENTENCIA FINALIZADA" << endl;
 	}
 	sqlite3_close(db);
 	return 0;
