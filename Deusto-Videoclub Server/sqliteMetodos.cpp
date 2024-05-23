@@ -227,6 +227,11 @@ int getAlquileres(char dni[], listaPelis &p) {
 			p.pelis[contador].setNombre((char*) sqlite3_column_text(stmt, 0));
 			cout << p.pelis[contador].getNombre() << endl;
 			contador++;
+		} else{
+			printf("Error\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_finalize(stmt);
+			sqlite3_close(db);
 		}
 	} while (result == SQLITE_ROW);
 
