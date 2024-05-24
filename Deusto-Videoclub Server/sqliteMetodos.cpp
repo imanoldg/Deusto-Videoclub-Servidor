@@ -219,6 +219,7 @@ int getAlquileres(char dni[], listaPelis &p) {
 	char sql2[] = "SELECT TITULO_PELI FROM alquiler WHERE DNI = ?";
 
 	cout << "Seleccionando peliculas..." << endl;
+	cout << dni << endl;
 
 	int result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt, NULL);
 	if (result != SQLITE_OK) {
@@ -228,7 +229,7 @@ int getAlquileres(char dni[], listaPelis &p) {
 		sqlite3_close(db);
 	}
 
-	result = sqlite3_bind_text(stmt, 1, dni, strlen(dni) + 1,
+	result = sqlite3_bind_text(stmt, 1, dni, strlen(dni),
 	SQLITE_STATIC);
 	if (result != SQLITE_OK) {
 		printf("Error binding parameters\n");
@@ -245,11 +246,6 @@ int getAlquileres(char dni[], listaPelis &p) {
 			p.pelis[contador].setNombre((char*) sqlite3_column_text(stmt, 0));
 			cout << p.pelis[contador].getNombre() << endl;
 			contador++;
-		} else {
-			printf("Error\n");
-			printf("%s\n", sqlite3_errmsg(db));
-			sqlite3_finalize(stmt);
-			sqlite3_close(db);
 		}
 	} while (result == SQLITE_ROW);
 

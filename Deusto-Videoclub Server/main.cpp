@@ -159,14 +159,14 @@ int main(void){
 
 		if(strcmp(recvBuff, "GET_ALQUILERES") == 0){
 			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-			char dni[strlen(recvBuff)] = "";
+			char dni[100];
 			strcpy(dni, recvBuff);
 			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 			int numPelis = atoi(recvBuff);
 
 			Pelicula* p = new Pelicula();
 			listaPelis peliculas(p, numPelis);
-
+			cout << "numP:" << numPelis;
 			getAlquileres(dni, peliculas);
 
 			sprintf(sendBuff, "%d", numPelis);
