@@ -219,7 +219,7 @@ int getAlquileres(char dni[], listaPelis &p) {
 	char sql2[] = "SELECT TITULO_PELI FROM alquiler WHERE DNI = ?";
 
 	cout << "Seleccionando peliculas..." << endl;
-	cout << dni << endl;
+
 
 	int result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt, NULL);
 	if (result != SQLITE_OK) {

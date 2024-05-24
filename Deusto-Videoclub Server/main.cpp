@@ -166,7 +166,6 @@ int main(void){
 
 			Pelicula* p = new Pelicula();
 			listaPelis peliculas(p, numPelis);
-			cout << "numP:" << numPelis;
 			getAlquileres(dni, peliculas);
 
 			sprintf(sendBuff, "%d", numPelis);
